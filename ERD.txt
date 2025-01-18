@@ -1,0 +1,36 @@
+User
+-----
+id (PK)
+name
+email
+password
+
+Goal
+-----
+id (PK)
+userId (FK)
+title
+specific
+measurable
+achievable
+relevant
+timeBound
+resources
+deadlines
+milestones
+
+Task
+-----
+id (PK)
+goalId (FK)
+title
+description
+status
+
+ActivityLog
+-----
+id (PK)
+taskId (FK)
+date
+description
+duration
