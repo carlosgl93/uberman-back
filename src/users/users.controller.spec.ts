@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
@@ -113,5 +117,20 @@ describe('UsersController', () => {
     jest.spyOn(usersService, 'count').mockImplementation(async () => result);
 
     expect(await usersController.count()).toBe(result);
+  });
+
+  it('should throw a 400 error if user created is missing fields', async () => {
+    const createUser = {
+      name: 'John',
+      password: 'password',
+    };
+
+    const result = { id: '1', ...createUser };
+    jest.spyOn(usersService, 'create').mockResolvedValue(null);
+    try {
+      await usersController.create(createUser as CreateUserDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestException);
+    }
   });
 });
