@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:17
+    container_name: uberman-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: uberman
+      POSTGRES_USER: carlos-db-admin
+      POSTGRES_PASSWORD: carlos817!
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
